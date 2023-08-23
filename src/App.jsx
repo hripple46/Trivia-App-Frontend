@@ -12,6 +12,7 @@ function App() {
       })
       .then((data) => {
         setQuestions(data.results);
+        console.log(data.results);
       });
   }, []);
 
@@ -22,8 +23,8 @@ function App() {
   }
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center">
-        <ul className="max-w-sm ">
+      <div className="w-full h-full flex justify-center items-center relative">
+        <ul className="w-96 absolute top-4">
           {questions.map((question) => {
             return (
               <li
@@ -36,6 +37,10 @@ function App() {
               >
                 <Questions
                   question={decodeHtmlEntities(question.question)}
+                  correct_answer={decodeHtmlEntities(question.correct_answer)}
+                  incorrect_answers={question.incorrect_answers.map((answer) =>
+                    decodeHtmlEntities(answer)
+                  )}
                 ></Questions>
               </li>
             );
