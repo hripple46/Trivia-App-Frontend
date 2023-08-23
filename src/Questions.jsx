@@ -21,11 +21,14 @@ function Questions() {
 
   return (
     <>
-      <ul>
+      <ul className="max-w-sm ">
         {questions.map((question) => {
           return (
-            <li key={question.question}>
-              {decodeHtmlEntities(question.question)}
+            <li
+              className="border-2 border-gray-400 rounded-md m-2 p-2"
+              key={question.question}
+            >
+              <div>{decodeHtmlEntities(question.question)}</div>
             </li>
           );
         })}

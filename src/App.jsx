@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Questions from "../Questions";
+import Questions from "./Questions";
 
 function App() {
   return (
     <>
-      <Questions />
+      <div className=" w-full h-full flex justify-center items-center">
+        <Questions />
+      </div>
     </>
   );
 }
