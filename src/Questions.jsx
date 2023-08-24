@@ -1,22 +1,49 @@
 import { useState, useEffect } from "react";
+import "./App.css";
+import QuestionContainer from "./QuestionContainer";
 
-function Questions({ question, correct_answer, incorrect_answers }) {
-  const [active, setActive] = useState(false);
+function Questions() {
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    fetch("https://opentdb.com/api.php?amount=5")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setQuestions(data.results);
+        console.log(data.results);
+      });
+  }, []);
+
+  function decodeHtmlEntities(text) {
+    const textArea = document.createElement("textarea");
+    textArea.innerHTML = text;
+    return textArea.value;
+  }
   return (
     <>
-      <div
-        className={`m-2 p-2 rounded-md ${
-          active ? "border-blue-400 border-2" : "border-gray-400 border-2"
-        }`}
-        onClick={() => {
-          setActive(true);
-        }}
-      >
-        <p className=""> {question}</p>
-        <p className="w-full">{correct_answer}</p>
-        <ul>
-          {incorrect_answers.map((answer) => {
-            return <li key={answer}>{answer}</li>;
+      <div className="w-full h-full flex justify-center items-center relative">
+        <ul className="w-96 absolute top-4">
+          {questions.map((question) => {
+            return (
+              <li
+                //on click, set the background color to gray using utility classes
+                //hint: use the className prop
+                onClick={() => {
+                  console.log("clicked");
+                }}
+                key={question.question}
+              >
+                <QuestionContainer
+                  question={decodeHtmlEntities(question.question)}
+                  correct_answer={decodeHtmlEntities(question.correct_answer)}
+                  incorrect_answers={question.incorrect_answers.map((answer) =>
+                    decodeHtmlEntities(answer)
+                  )}
+                ></QuestionContainer>
+              </li>
+            );
           })}
         </ul>
       </div>
