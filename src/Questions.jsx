@@ -4,6 +4,7 @@ import "./App.css";
 function Questions() {
   const [questions, setQuestions] = useState([]);
   const [results, setResults] = useState([]);
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
@@ -16,7 +17,16 @@ function Questions() {
   const displayQuestions = () => {
     return questions.map((question) => {
       return (
-        <div key={question.question}>
+        <div
+          className={
+            !completed
+              ? "not-completed-class"
+              : completed && question.result
+              ? "bg-green-500"
+              : "bg-red-500"
+          }
+          key={question.question}
+        >
           <p>{decodeHtmlEntities(question.question)}</p>
           {question.incorrect_answers.map((answer) => {
             return (
@@ -49,6 +59,7 @@ function Questions() {
       question.result === true ? "Correct!" : "Incorrect!"
     );
     setResults(newResults);
+    setCompleted(true);
   };
 
   function decodeHtmlEntities(text) {
