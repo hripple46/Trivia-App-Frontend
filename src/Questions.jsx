@@ -34,6 +34,7 @@ function Questions() {
           {question.incorrect_answers.map((answer) => {
             return (
               <p
+                className="hover:bg-gray-200 cursor-pointer"
                 onClick={() => {
                   console.log("Incorrect!");
                   question.result = false;
@@ -45,6 +46,10 @@ function Questions() {
             );
           })}
           <p
+            className={
+              "hover:bg-gray-200 cursor-pointer" +
+              (completed ? " font-bold" : "")
+            }
             onClick={() => {
               console.log("Correct!");
               question.result = true;
