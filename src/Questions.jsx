@@ -19,15 +19,18 @@ function Questions() {
       return (
         <div
           className={
+            //"w-1/3 p-4 m-4" +
             !completed
-              ? "not-completed-class"
+              ? "border-gray-500 border-2 w-1/3 m-4"
               : completed && question.result
-              ? "bg-green-500"
-              : "bg-red-500"
+              ? "border-green-500 border-2 w-1/3 m-4"
+              : "border-red-500 border-2 w-1/3 m-4"
           }
           key={question.question}
         >
-          <p>{decodeHtmlEntities(question.question)}</p>
+          <p className="font-bold mb-2">
+            {decodeHtmlEntities(question.question)}
+          </p>
           {question.incorrect_answers.map((answer) => {
             return (
               <p
@@ -70,18 +73,16 @@ function Questions() {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col justify-center items-center relative">
+      <div className=" flex flex-col justify-center items-center relative mt-2">
+        <h1 className="text-4xl font-bold">Trivia!</h1>
         {displayQuestions()}
-        <div className="absolute bottom-0 w-full flex justify-center">
+        <div className="w-full flex justify-center">
           <button
             onClick={handleSubmit}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Submit
           </button>
-          {results.map((result, index) => (
-            <p key={index}>{result}</p>
-          ))}
         </div>
       </div>
     </>
