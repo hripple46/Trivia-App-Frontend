@@ -15,11 +15,13 @@ function Questions() {
   }, []);
 
   const displayQuestions = () => {
+    // State to keep track of clicked answers for each question.
+    const [clickedAnswers, setClickedAnswers] = useState({});
+
     return questions.map((question) => {
       return (
         <div
           className={
-            //"w-1/3 p-4 m-4" +
             !completed
               ? "border-gray-500 border-2 w-1/3 m-4"
               : completed && question.result
@@ -34,10 +36,19 @@ function Questions() {
           {question.incorrect_answers.map((answer) => {
             return (
               <p
-                className="hover:bg-gray-200 cursor-pointer"
+                className={
+                  "hover:bg-gray-200 cursor-pointer" +
+                  (clickedAnswers[question.question] === answer
+                    ? " bg-gray-200"
+                    : "")
+                }
                 onClick={() => {
                   console.log("Incorrect!");
                   question.result = false;
+                  setClickedAnswers({
+                    ...clickedAnswers,
+                    [question.question]: answer,
+                  });
                 }}
                 key={answer}
               >
@@ -48,11 +59,18 @@ function Questions() {
           <p
             className={
               "hover:bg-gray-200 cursor-pointer" +
-              (completed ? " font-bold" : "")
+              (completed ? " font-bold" : "") +
+              (clickedAnswers[question.question] === question.correct_answer
+                ? " bg-gray-200"
+                : "")
             }
             onClick={() => {
               console.log("Correct!");
               question.result = true;
+              setClickedAnswers({
+                ...clickedAnswers,
+                [question.question]: question.correct_answer,
+              });
             }}
           >
             {decodeHtmlEntities(question.correct_answer)}
