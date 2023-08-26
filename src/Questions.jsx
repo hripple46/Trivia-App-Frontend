@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Score from "./Score";
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -30,6 +31,15 @@ function Questions() {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+  function getScore() {
+    let score = 0;
+    for (let i = 0; i < questions.length; i++) {
+      if (questions[i].result === true) {
+        score++;
+      }
+    }
+    return score;
   }
 
   const displayQuestions = () => {
@@ -86,6 +96,7 @@ function Questions() {
     );
     setResults(newResults);
     setCompleted(true);
+    getScore();
   };
 
   function decodeHtmlEntities(text) {
@@ -96,8 +107,11 @@ function Questions() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center relative mt-2">
-        <h1 className="text-4xl font-bold">Trivia!</h1>
+      <div className="flex flex-col justify-center items-center relative mt-2 overflow-x-clip">
+        <div className="w-1/3 flex justify-between items-end">
+          <h1 className="text-4xl font-bold">Trivia!</h1>
+          <p className="text-xl italic">An Ashmita G Co.</p>
+        </div>
         {displayQuestions()}
         <div className="w-full flex justify-center">
           <button
@@ -107,6 +121,7 @@ function Questions() {
             Submit
           </button>
         </div>
+        {completed && <Score score={getScore()} />}
       </div>
     </>
   );
