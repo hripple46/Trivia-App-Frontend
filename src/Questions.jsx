@@ -8,7 +8,7 @@ function Questions() {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5")
+    fetch("https://opentdb.com/api.php?amount=5&category=9")
       .then((response) => response.json())
       .then((data) => {
         // Sort the questions by difficulty level
