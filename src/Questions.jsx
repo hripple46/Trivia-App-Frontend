@@ -60,10 +60,10 @@ function Questions() {
       <div
         className={
           !completed
-            ? "border-gray-500 border-2 w-1/3 m-4"
+            ? "border-gray-500 border-2 md:w-1/3 w-3/4 m-4"
             : completed && question.result
-            ? "border-green-500 border-2 w-1/3 m-4"
-            : "border-red-500 border-2 w-1/3 m-4"
+            ? "border-green-500 border-2 md:w-1/3 w-3/4 m-4"
+            : "border-red-500 border-2 md:w-1/3 w-3/4 m-4"
         }
         key={question.question}
       >
@@ -121,15 +121,15 @@ function Questions() {
   return (
     <>
       <div className="flex flex-col justify-center items-center relative mt-2 overflow-x-clip">
-        <div className="w-1/3 flex justify-between items-end">
-          <h1 className="text-4xl font-bold">Trivia!</h1>
-          <p className="text-xl italic">An Ashmita G Co.</p>
+        <div className="md:w-1/3 w-full  flex md:justify-between justify-around items-end">
+          <h1 className="text-4xl font-bold">Daily Quiz Game!</h1>
+          <p className="text-xl italic">An Ashmita G License</p>
         </div>
         {displayQuestions()}
         <div className="w-full flex justify-center">
           <button
             onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded"
           >
             Submit
           </button>
