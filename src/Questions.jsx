@@ -8,12 +8,35 @@ function Questions() {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    fetch("https://ancient-morning-8801.fly.dev/questions")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchQuestions = async (retries = 3) => {
+      try {
+        const response = await fetch(
+          "https://ancient-morning-8801.fly.dev/questions"
+        );
+        const data = await response.json();
         console.log(data);
+
+        // If the data array is empty and there are retries left
+        if (!data.length && retries > 0) {
+          setTimeout(() => {
+            fetchQuestions(retries - 1);
+          }, 2000); // Wait for 2 seconds before retrying
+          return;
+        }
+
         setQuestions(data);
-      });
+      } catch (error) {
+        console.error("An error occurred:", error);
+        if (retries > 0) {
+          setTimeout(() => {
+            fetchQuestions(retries - 1);
+          }, 2000); // Wait for 2 seconds before retrying
+        }
+      }
+    };
+
+    // Trigger the fetch operation
+    fetchQuestions();
   }, []);
 
   // Keep track of which answers have been clicked
