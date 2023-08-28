@@ -8,7 +8,7 @@ function Questions() {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/questions")
+    fetch("https://ancient-morning-8801.fly.dev/questions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
