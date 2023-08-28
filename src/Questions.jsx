@@ -8,42 +8,16 @@ function Questions() {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5&category=9")
+    fetch("http://localhost:3000/questions")
       .then((response) => response.json())
       .then((data) => {
-        // Sort the questions by difficulty level
-        const sortedByDifficulty = data.results.sort((a, b) => {
-          const order = ["easy", "medium", "hard"];
-          return order.indexOf(a.difficulty) - order.indexOf(b.difficulty);
-        });
-
-        // Shuffle answers for each question
-        const shuffledQuestions = sortedByDifficulty.map((question) => {
-          const allAnswers = [
-            // Spread operator to add all incorrect answers
-            ...question.incorrect_answers,
-            question.correct_answer,
-          ];
-          question.shuffledAnswers = shuffle([...allAnswers]);
-          return question;
-        });
-
-        // Set the sorted and shuffled questions into state
-        setQuestions(shuffledQuestions);
+        console.log(data);
+        setQuestions(data);
       });
   }, []);
 
   // Keep track of which answers have been clicked
   const [clickedAnswers, setClickedAnswers] = useState({});
-
-  // Fisher-Yates shuffle algorithm
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
 
   function getScore() {
     let score = 0;
