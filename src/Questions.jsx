@@ -95,9 +95,9 @@ function Questions() {
   return (
     <>
       <div className="flex flex-col justify-center items-center relative mt-2 overflow-x-clip">
-        <div className="md:w-1/3 w-full  flex md:justify-between justify-around items-end">
-          <h1 className="text-4xl font-bold">Daily Quiz Game!</h1>
-          <p className="text-xl italic">An Ashmita G License</p>
+        <div className="mt-4 w-full   flex sm:justify-around justify-around items-end">
+          <h1 className="md:text-4xl text-xl font-bold">Daily Quiz Game!</h1>
+          <p className="md:text-xl text-xs italic">An Ashmita G License</p>
         </div>
         {displayQuestions()}
         <div className="w-full flex justify-center">
@@ -108,6 +108,7 @@ function Questions() {
             Submit
           </button>
         </div>
+        {!questions.length && <p>Loading Questions...</p>}
         {completed && <Score score={getScore()} />}
       </div>
     </>
