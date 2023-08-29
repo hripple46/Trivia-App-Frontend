@@ -126,6 +126,8 @@ function Questions() {
           <p className="md:text-xl text-xs italic">An Ashmita G License</p>
         </div>
         {displayQuestions()}
+        {!questions.length && <p className="text-xl">Loading Questions...</p>}
+
         <div className="w-full flex justify-center">
           <button
             onClick={handleSubmit}
@@ -134,7 +136,6 @@ function Questions() {
             Submit
           </button>
         </div>
-        {!questions.length && <p>Loading Questions...</p>}
         {completed && <Score score={getScore()} />}
       </div>
     </>
