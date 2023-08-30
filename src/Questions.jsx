@@ -121,7 +121,7 @@ function Questions() {
         <div className="mt-4 w-full   flex sm:justify-around justify-around items-end">
           <div>
             <h1 className="md:text-4xl text-xl font-bold">Daily Quiz Game!</h1>
-            <p className="text-xs">New Questions Every Day at 8PM EST</p>
+            <p className="text-xs">New Questions Every Day at 8:45PM</p>
           </div>
           <p className="md:text-xl text-xs italic">An Ashmita G License</p>
         </div>
