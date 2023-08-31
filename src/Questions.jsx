@@ -70,7 +70,7 @@ function Questions() {
         {question.shuffledAnswers.map((answer) => (
           <p
             className={
-              "hover:bg-gray-200 cursor-pointer" +
+              "hover:bg-gray-200 cursor-pointer p-2" +
               (clickedAnswers[question.question] === answer
                 ? " bg-gray-200"
                 : "") +
