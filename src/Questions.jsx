@@ -136,7 +136,7 @@ function Questions() {
             Submit
           </button>
         </div>
-        {completed && <Score score={getScore()} />}
+        {completed && <Score score={getScore()} results={results} />}
       </div>
     </>
   );
