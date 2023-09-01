@@ -7,6 +7,8 @@ function Questions() {
   const [results, setResults] = useState([]);
   const [completed, setCompleted] = useState(false);
 
+  //question ids will be used to check if user has already answered question
+  const [questionIds, setQuestionIds] = useState([]);
   useEffect(() => {
     const fetchQuestions = async (retries = 3) => {
       try {
@@ -25,6 +27,8 @@ function Questions() {
         }
 
         setQuestions(data);
+        //store id's in array to check if user has already answered question
+        setQuestionIds(data.map((question) => question._id));
       } catch (error) {
         console.error("An error occurred:", error);
         if (retries > 0) {
@@ -107,6 +111,9 @@ function Questions() {
     setResults(newResults);
     setCompleted(true);
     getScore();
+    localStorage.setItem("results", JSON.stringify(newResults));
+    localStorage.setItem("ids", JSON.stringify(questionIds));
+    console.log("Here's the questions array: ", questionIds);
   };
 
   function decodeHtmlEntities(text) {
