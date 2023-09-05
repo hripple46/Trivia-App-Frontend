@@ -11,7 +11,7 @@ export default function Questions({ score, results }) {
     if (navigator.share) {
       navigator
         .share({
-          text: `Daily Quiz Game! \n\nI got ${score} out of 5! \nHere are my results: ${symbols}`,
+          text: `Daily Quiz Game! \ndailyquizgame.com \n\nI got ${score} out of 5! \nHere are my results: ${symbols}`,
         })
         .then(() => console.log("Shared!"))
         .catch((error) => console.log(error));

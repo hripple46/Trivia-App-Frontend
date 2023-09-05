@@ -9,6 +9,9 @@ function Questions() {
 
   //question ids will be used to check if user has already answered question
   const [questionIds, setQuestionIds] = useState([]);
+
+  //function to compare question ids to see if user has already answered question
+
   useEffect(() => {
     const fetchQuestions = async (retries = 3) => {
       try {
@@ -29,6 +32,8 @@ function Questions() {
         setQuestions(data);
         //store id's in array to check if user has already answered question
         setQuestionIds(data.map((question) => question._id));
+        //compare the question ids with the ids stored in local storage
+        //if the question id is in the local storage, then the user has already submitted their answers for the day
       } catch (error) {
         console.error("An error occurred:", error);
         if (retries > 0) {
@@ -61,25 +66,25 @@ function Questions() {
       <div
         className={
           !completed
-            ? "border-gray-500 border-2 md:w-1/3 w-3/4 m-4"
+            ? "text-center md:w-1/3 w-3/4 m-4"
             : completed && question.result
-            ? "border-green-500 border-2 md:w-1/3 w-3/4 m-4"
-            : "border-red-500 border-2 md:w-1/3 w-3/4 m-4"
+            ? "text-center border-green-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
+            : " text-center border-red-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
         }
         key={question.question}
       >
-        <p className="font-bold mb-2">
+        <p className="font-normal mb-2 p-2 text-md md:text-xl">
           {decodeHtmlEntities(question.question)}
         </p>
         {question.shuffledAnswers.map((answer) => (
           <p
             className={
-              "hover:bg-gray-200 cursor-pointer p-2" +
+              "hover:bg-gray-200 cursor-pointer p-2 border-2 border-gray-400 rounded-md m-2" +
               (clickedAnswers[question.question] === answer
                 ? " bg-gray-200"
                 : "") +
               (completed && answer === question.correct_answer
-                ? " font-bold"
+                ? " font-semibold"
                 : "")
             }
             onClick={() => {
@@ -126,9 +131,9 @@ function Questions() {
     <>
       <div className="flex flex-col justify-center items-center relative mt-2 overflow-x-clip">
         <div className="mt-4 w-full   flex justify-center">
-          <div className="w-full flex justify-center flex-col items-center">
-            <h1 className="md:text-4xl text-xl font-bold">Daily Quiz Game!</h1>
-            <p className="text-xs">New Questions at Midnight!</p>
+          <div className="w-full flex justify-center flex-col items-center border-b-2 pb-2 border-gray-400">
+            <h1 className="md:text-4xl text-2xl font-bold">Daily Quiz Game</h1>
+            <p className="md:text-md text-sm">New Questions at Midnight!</p>
           </div>
         </div>
         {displayQuestions()}
