@@ -24,7 +24,7 @@ export default function Questions({ score, results }) {
     <div
       className={
         showScore
-          ? `md:w-1/2 md:h-1/3 w-3/4 h-1/4 bg-blue-500/75 rounded-md text-white flex flex-col items-center sm:justify-center justify-between fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`
+          ? `md:w-1/2 md:h-1/3 w-full h-1/2 bg-blue-500 rounded-md text-white flex flex-col items-center sm:justify-center justify-around fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`
           : `hidden`
       }
     >
