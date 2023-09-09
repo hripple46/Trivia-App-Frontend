@@ -88,17 +88,19 @@ function Questions() {
                 : "")
             }
             onClick={() => {
-              if (answer === question.correct_answer) {
-                console.log("Correct!");
-                question.result = true;
-              } else {
-                console.log("Incorrect!");
-                question.result = false;
+              if (!completed) {
+                if (answer === question.correct_answer) {
+                  console.log("Correct!");
+                  question.result = true;
+                } else {
+                  console.log("Incorrect!");
+                  question.result = false;
+                }
+                setClickedAnswers({
+                  ...clickedAnswers,
+                  [question.question]: answer,
+                });
               }
-              setClickedAnswers({
-                ...clickedAnswers,
-                [question.question]: answer,
-              });
             }}
             key={answer}
           >
