@@ -131,7 +131,7 @@ function Questions() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center relative mt-2 overflow-x-clip">
+      <div className="flex flex-col justify-center items-center relative mt-2 ">
         <div className="mt-4 w-full   flex justify-center">
           <div className="w-full flex justify-center flex-col items-center border-b-2 pb-2 border-gray-400">
             <h1 className="md:text-4xl text-2xl font-bold">Daily Quiz Game</h1>
