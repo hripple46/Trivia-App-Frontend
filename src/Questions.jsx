@@ -7,6 +7,9 @@ function Questions() {
   const [results, setResults] = useState([]);
   const [completed, setCompleted] = useState(false);
 
+  //adding showScore state to pass as a prop to Score component
+  const [showScore, setShowScore] = useState(false);
+
   //question ids will be used to check if user has already answered question
   const [questionIds, setQuestionIds] = useState([]);
 
@@ -121,6 +124,7 @@ function Questions() {
     localStorage.setItem("results", JSON.stringify(newResults));
     localStorage.setItem("ids", JSON.stringify(questionIds));
     console.log("Here's the questions array: ", questionIds);
+    setShowScore(true);
   };
 
   function decodeHtmlEntities(text) {
@@ -149,7 +153,22 @@ function Questions() {
             Submit
           </button>
         </div>
-        {completed && <Score score={getScore()} results={results} />}
+        {completed && (
+          <Score
+            score={getScore()}
+            results={results}
+            visibility={showScore}
+            onHide={() => setShowScore(false)}
+          />
+        )}
+        {completed && (
+          <div
+            onClick={() => setShowScore(true)}
+            className="p-2 rounded-md text-white text-xs fixed top-2 right-2 bg-blue-500 hover:bg-blue-700 hover:cursor-pointer"
+          >
+            Show Score
+          </div>
+        )}
       </div>
     </>
   );
