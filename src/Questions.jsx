@@ -87,7 +87,7 @@ function Questions() {
                 ? " bg-gray-200"
                 : "") +
               (completed && answer === question.correct_answer
-                ? " font-semibold"
+                ? " font-semibold text-green-500"
                 : "")
             }
             onClick={() => {
