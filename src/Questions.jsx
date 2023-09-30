@@ -123,9 +123,16 @@ function Questions() {
     getScore();
     localStorage.setItem("results", JSON.stringify(newResults));
     localStorage.setItem("ids", JSON.stringify(questionIds));
+    localStorage.setItem(date, getScore());
     console.log("Here's the questions array: ", questionIds);
     setShowScore(true);
   };
+  //get date and convert to string, with format, month day, year
+  const date = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   function decodeHtmlEntities(text) {
     const textArea = document.createElement("textarea");
