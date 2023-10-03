@@ -1,4 +1,15 @@
-export default function Score({ score, results, visibility, onHide }) {
+export default function Score({
+  score,
+  results,
+  visibility,
+  onHide,
+  score0,
+  score1,
+  score2,
+  score3,
+  score4,
+  score5,
+}) {
   const symbols = results
     .map((result) => (result === "Correct!" ? "✅" : "❌"))
     .join("");
@@ -32,6 +43,15 @@ export default function Score({ score, results, visibility, onHide }) {
         Share Score
       </button>
       <button onClick={onHide}>Hide Score</button>
+      <h1>Previous Results:</h1>
+      <ul>
+        <li>0 Correct: {score0}</li>
+        <li>1 Correct: {score1}</li>
+        <li>2 Correct: {score2}</li>
+        <li>3 Correct: {score3}</li>
+        <li>4 Correct: {score4}</li>
+        <li>5 Correct: {score5}</li>
+      </ul>
     </div>
   );
 }

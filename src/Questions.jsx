@@ -7,6 +7,13 @@ function Questions() {
   const [results, setResults] = useState([]);
   const [completed, setCompleted] = useState(false);
 
+  const [score0, setScore0] = useState(0);
+  const [score1, setScore1] = useState(0);
+  const [score2, setScore2] = useState(0);
+  const [score3, setScore3] = useState(0);
+  const [score4, setScore4] = useState(0);
+  const [score5, setScore5] = useState(0);
+
   //adding showScore state to pass as a prop to Score component
   const [showScore, setShowScore] = useState(false);
 
@@ -49,6 +56,10 @@ function Questions() {
 
     // Trigger the fetch operation
     fetchQuestions();
+  }, []);
+
+  useEffect(() => {
+    getPreviousScores();
   }, []);
 
   // Keep track of which answers have been clicked
@@ -140,6 +151,79 @@ function Questions() {
     return textArea.value;
   }
 
+  function getPreviousScores() {
+    // Check if localStorage is supported in the browser
+    if (typeof localStorage !== "undefined") {
+      // Create an empty object to store filtered items
+      var filteredItems = {};
+
+      // Iterate through localStorage keys
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+
+        // Check if the key starts with the name of a month
+        var months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        for (var j = 0; j < months.length; j++) {
+          var month = months[j];
+          if (key.startsWith(month)) {
+            // Add the key-value pair to the filteredItems object
+            filteredItems[key] = value;
+            break; // Exit the inner loop once a match is found
+          }
+        }
+      }
+
+      // Now filteredItems contains items with keys starting with a month
+      console.log(filteredItems);
+      //tally up the the # of times, the score was 0,1,2,3,4, or 5
+      let score0 = 0;
+      let score1 = 0;
+      let score2 = 0;
+      let score3 = 0;
+      let score4 = 0;
+      let score5 = 0;
+
+      for (let key in filteredItems) {
+        if (filteredItems[key] === "0") {
+          score0++;
+        } else if (filteredItems[key] === "1") {
+          score1++;
+        } else if (filteredItems[key] === "2") {
+          score2++;
+        } else if (filteredItems[key] === "3") {
+          score3++;
+        } else if (filteredItems[key] === "4") {
+          score4++;
+        } else if (filteredItems[key] === "5") {
+          score5++;
+        }
+      }
+      setScore0(score0);
+      setScore1(score1);
+      setScore2(score2);
+      setScore3(score3);
+      setScore4(score4);
+      setScore5(score5);
+    } else {
+      console.log("localStorage is not supported in this browser.");
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col justify-center items-center relative mt-2 ">
@@ -166,6 +250,12 @@ function Questions() {
             results={results}
             visibility={showScore}
             onHide={() => setShowScore(false)}
+            score0={score0}
+            score1={score1}
+            score2={score2}
+            score3={score3}
+            score4={score4}
+            score5={score5}
           />
         )}
         {completed && (
