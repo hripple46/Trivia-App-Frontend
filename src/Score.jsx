@@ -42,26 +42,28 @@ export default function Score({
       >
         Share Score
       </button>
-      <button onClick={onHide}>Hide Score</button>
-      <h1 className="xl:mt-4">Previous Results:</h1>
-      <ul className="w-full flex justify-around">
+      <button onClick={onHide}>
+        <p className="underline">Hide Score</p>
+      </button>
+      <h1 className="xl:mt-4">Previous Scores of 5:</h1>
+      <ul className="w-full flex justify-around xl:justify-evenly">
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">0</p> <div>{score0}x</div>
+          <p className="w-4 text-center border-b-2">0</p> <div>{score0}x</div>
         </li>
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">1</p> <div>{score1}x</div>
+          <p className="w-4 text-center border-b-2">1</p> <div>{score1}x</div>
         </li>
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">2</p> <div>{score2}x</div>
+          <p className="w-4 text-center border-b-2">2</p> <div>{score2}x</div>
         </li>
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">3</p> <div>{score3}x</div>
+          <p className="w-4 text-center border-b-2">3</p> <div>{score3}x</div>
         </li>
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">4</p> <div>{score4}x</div>
+          <p className="w-4 text-center border-b-2">4</p> <div>{score4}x</div>
         </li>
         <li className="flex flex-col justify-center items-center">
-          <p className="border-b-2">5</p> <div>{score5}x</div>
+          <p className="w-4 text-center border-b-2">5</p> <div>{score5}x</div>
         </li>
       </ul>
     </div>
