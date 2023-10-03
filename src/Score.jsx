@@ -43,14 +43,26 @@ export default function Score({
         Share Score
       </button>
       <button onClick={onHide}>Hide Score</button>
-      <h1>Previous Results:</h1>
-      <ul>
-        <li>0 Correct: {score0}</li>
-        <li>1 Correct: {score1}</li>
-        <li>2 Correct: {score2}</li>
-        <li>3 Correct: {score3}</li>
-        <li>4 Correct: {score4}</li>
-        <li>5 Correct: {score5}</li>
+      <h1 className="xl:mt-4">Previous Results:</h1>
+      <ul className="w-full flex justify-around">
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">0</p> <div>{score0}x</div>
+        </li>
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">1</p> <div>{score1}x</div>
+        </li>
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">2</p> <div>{score2}x</div>
+        </li>
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">3</p> <div>{score3}x</div>
+        </li>
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">4</p> <div>{score4}x</div>
+        </li>
+        <li className="flex flex-col justify-center items-center">
+          <p className="border-b-2">5</p> <div>{score5}x</div>
+        </li>
       </ul>
     </div>
   );
