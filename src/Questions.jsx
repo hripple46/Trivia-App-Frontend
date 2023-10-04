@@ -72,6 +72,7 @@ function Questions() {
     if (localStorage.getItem(date)) {
       setShowTodayCompleted(true);
       setScore(localStorage.getItem(date));
+      setResults(JSON.parse(localStorage.getItem("results")));
       setCompleted(true);
       setShowScore(true);
     }
