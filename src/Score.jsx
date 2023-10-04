@@ -36,7 +36,6 @@ export default function Score({
           : `hidden`
       }
     >
-      {todayComplete && <h1>You've Already Played Today!</h1>}
       <h1 className="text-2xl">{score} of 5</h1>
       <button
         className="border-2 border-white p-2 rounded-md"
