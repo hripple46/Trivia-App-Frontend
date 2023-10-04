@@ -6,6 +6,9 @@ function Questions() {
   const [questions, setQuestions] = useState([]);
   const [results, setResults] = useState([]);
   const [completed, setCompleted] = useState(false);
+  const [showTodayCompleted, setShowTodayCompleted] = useState(false);
+
+  const [score, setScore] = useState(0);
 
   const [score0, setScore0] = useState(0);
   const [score1, setScore1] = useState(0);
@@ -16,6 +19,8 @@ function Questions() {
 
   //adding showScore state to pass as a prop to Score component
   const [showScore, setShowScore] = useState(false);
+
+  const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
 
   //question ids will be used to check if user has already answered question
   const [questionIds, setQuestionIds] = useState([]);
@@ -62,24 +67,36 @@ function Questions() {
     getPreviousScores();
   }, []);
 
+  useEffect(() => {
+    //chec if todays date is on local storage
+    if (localStorage.getItem(date)) {
+      setShowTodayCompleted(true);
+      setScore(localStorage.getItem(date));
+      setCompleted(true);
+      setShowScore(true);
+    }
+  }, []);
+
   // Keep track of which answers have been clicked
   const [clickedAnswers, setClickedAnswers] = useState({});
 
   function getScore() {
-    let score = 0;
+    let newScore = 0;
     for (let i = 0; i < questions.length; i++) {
       if (questions[i].result === true) {
-        score++;
+        newScore++;
       }
     }
-    return score;
+    console.log("Here's the new score: ", newScore);
+    setScore(newScore);
+    localStorage.setItem(date, newScore);
   }
 
   const displayQuestions = () => {
     return questions.map((question) => (
       <div
         className={
-          !completed
+          !completed || !showCorrectAnswers
             ? "text-center md:w-1/3 w-3/4 m-4"
             : completed && question.result
             ? "text-center border-green-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
@@ -97,7 +114,9 @@ function Questions() {
               (clickedAnswers[question.question] === answer
                 ? " bg-gray-200"
                 : "") +
-              (completed && answer === question.correct_answer
+              (completed &&
+              showCorrectAnswers &&
+              answer === question.correct_answer
                 ? " font-semibold text-green-500"
                 : "")
             }
@@ -132,17 +151,22 @@ function Questions() {
     setResults(newResults);
     setCompleted(true);
     getScore();
+    setShowCorrectAnswers(true);
     localStorage.setItem("results", JSON.stringify(newResults));
     localStorage.setItem("ids", JSON.stringify(questionIds));
-    localStorage.setItem(date, getScore());
+
     console.log("Here's the questions array: ", questionIds);
     setShowScore(true);
   };
-  //get date and convert to string, with format, month day, year
+  // Set the timezone to Eastern Standard Time (EST)
+  const estTimezone = "America/New_York";
+
+  // Get the current date and time in EST
   const date = new Date().toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: estTimezone, // Specify the EST timezone
   });
 
   function decodeHtmlEntities(text) {
@@ -237,16 +261,19 @@ function Questions() {
         {!questions.length && <p className="text-xl">Loading Questions...</p>}
 
         <div className="w-full flex justify-center">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded"
-          >
-            Submit
-          </button>
+          {!completed && (
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded"
+            >
+              Submit
+            </button>
+          )}
         </div>
         {completed && (
           <Score
-            score={getScore()}
+            todayComplete={showTodayCompleted}
+            score={score}
             results={results}
             visibility={showScore}
             onHide={() => setShowScore(false)}
