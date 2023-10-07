@@ -59,8 +59,11 @@ function Questions() {
       }
     };
 
-    // Trigger the fetch operation
-    if (!localStorage.getItem(date)) {
+    // Trigger the fetch operation if the user has not answered the questions for the day
+    if (
+      !localStorage.getItem(date) ||
+      !localStorage.getItem("todaysCompletedQuestions")
+    ) {
       fetchQuestions();
     }
   }, []);
@@ -72,20 +75,18 @@ function Questions() {
   useEffect(() => {
     async function getTodaysResults() {
       //chec if todays date is on local storage
-      if (localStorage.getItem(date)) {
-        if (localStorage.getItem("todaysCompletedQuestions")) {
-          let todaysCompletedQuestions = await JSON.parse(
-            localStorage.getItem("todaysCompletedQuestions")
-          );
-          setShowCorrectAnswers(true);
-          console.log("Here's the questions array: ", todaysCompletedQuestions);
-          setQuestions(todaysCompletedQuestions);
-          console.log("Here's the questions array: ", todaysCompletedQuestions);
-        } else {
-          //adding this to reset the day as this conditional would only run if there is an issue with the local storage having the score, but not having the questions
-          localStorage.removeItem(date);
-          window.location.reload();
-        }
+      if (
+        localStorage.getItem(date) &&
+        localStorage.getItem("todaysCompletedQuestions")
+      ) {
+        let todaysCompletedQuestions = await JSON.parse(
+          localStorage.getItem("todaysCompletedQuestions")
+        );
+        setShowCorrectAnswers(true);
+        console.log("Here's the questions array: ", todaysCompletedQuestions);
+        setQuestions(todaysCompletedQuestions);
+        console.log("Here's the questions array: ", todaysCompletedQuestions);
+
         setShowTodayCompleted(true);
 
         setScore(localStorage.getItem(date));
