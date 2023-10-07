@@ -60,7 +60,9 @@ function Questions() {
     };
 
     // Trigger the fetch operation
-    fetchQuestions();
+    if (!localStorage.getItem(date)) {
+      fetchQuestions();
+    }
   }, []);
 
   useEffect(() => {
@@ -68,14 +70,31 @@ function Questions() {
   }, []);
 
   useEffect(() => {
-    //chec if todays date is on local storage
-    if (localStorage.getItem(date)) {
-      setShowTodayCompleted(true);
-      setScore(localStorage.getItem(date));
-      setResults(JSON.parse(localStorage.getItem("results")));
-      setCompleted(true);
-      setShowScore(true);
+    async function getTodaysResults() {
+      //chec if todays date is on local storage
+      if (localStorage.getItem(date)) {
+        if (localStorage.getItem("todaysCompletedQuestions")) {
+          let todaysCompletedQuestions = await JSON.parse(
+            localStorage.getItem("todaysCompletedQuestions")
+          );
+          setShowCorrectAnswers(true);
+          console.log("Here's the questions array: ", todaysCompletedQuestions);
+          setQuestions(todaysCompletedQuestions);
+          console.log("Here's the questions array: ", todaysCompletedQuestions);
+        } else {
+          //adding this to reset the day as this conditional would only run if there is an issue with the local storage having the score, but not having the questions
+          localStorage.removeItem(date);
+          window.location.reload();
+        }
+        setShowTodayCompleted(true);
+
+        setScore(localStorage.getItem(date));
+        setResults(JSON.parse(localStorage.getItem("results")));
+        setCompleted(true);
+        setShowScore(true);
+      }
     }
+    getTodaysResults();
   }, []);
 
   // Keep track of which answers have been clicked
@@ -97,11 +116,15 @@ function Questions() {
     return questions.map((question) => (
       <div
         className={
+          // Conditional class assignment based on the following criteria:
+          // If the quiz is not completed or correct answers should not be shown, use these classes
           !completed || !showCorrectAnswers
             ? "text-center md:w-1/3 w-3/4 m-4"
-            : completed && question.result
+            : // If the quiz is completed and this question is correct, use these classes
+            completed && question.result
             ? "text-center border-green-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
-            : " text-center border-red-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
+            : // If the quiz is completed and this question is incorrect, use these classes
+              " text-center border-red-500 border-2 md:w-1/3 w-3/4 m-4 rounded-md"
         }
         key={question.question}
       >
@@ -111,10 +134,13 @@ function Questions() {
         {question.shuffledAnswers.map((answer) => (
           <p
             className={
+              // Conditional class assignment for answer choices:
+              // If an answer choice is clicked, apply background color and border
               "hover:bg-gray-200 cursor-pointer p-2 border-2 border-gray-400 rounded-md m-2" +
               (clickedAnswers[question.question] === answer
                 ? " bg-gray-200"
                 : "") +
+              // If the quiz is completed and correct answers should be shown, style correct answers differently
               (completed &&
               showCorrectAnswers &&
               answer === question.correct_answer
@@ -124,12 +150,15 @@ function Questions() {
             onClick={() => {
               if (!completed) {
                 if (answer === question.correct_answer) {
+                  // Log "Correct!" if the selected answer is correct
                   console.log("Correct!");
                   question.result = true;
                 } else {
+                  // Log "Incorrect!" if the selected answer is incorrect
                   console.log("Incorrect!");
                   question.result = false;
                 }
+                // Update the state to keep track of clicked answers
                 setClickedAnswers({
                   ...clickedAnswers,
                   [question.question]: answer,
@@ -149,12 +178,14 @@ function Questions() {
     const newResults = questions.map((question) =>
       question.result === true ? "Correct!" : "Incorrect!"
     );
+    console.log("Updated Questions: ", questions);
     setResults(newResults);
     setCompleted(true);
     getScore();
     setShowCorrectAnswers(true);
     localStorage.setItem("results", JSON.stringify(newResults));
     localStorage.setItem("ids", JSON.stringify(questionIds));
+    localStorage.setItem("todaysCompletedQuestions", JSON.stringify(questions));
 
     console.log("Here's the questions array: ", questionIds);
     setShowScore(true);
