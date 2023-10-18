@@ -62,7 +62,8 @@ function Questions() {
     // Trigger the fetch operation if the user has not answered the questions for the day
     if (
       !localStorage.getItem(date) ||
-      !localStorage.getItem("todaysCompletedQuestions")
+      !localStorage.getItem("todaysCompletedQuestions") ||
+      !localStorage.getItem("ClickedAnswers")
     ) {
       fetchQuestions();
     }
@@ -77,7 +78,8 @@ function Questions() {
       //chec if todays date is on local storage
       if (
         localStorage.getItem(date) &&
-        localStorage.getItem("todaysCompletedQuestions")
+        localStorage.getItem("todaysCompletedQuestions") &&
+        localStorage.getItem("ClickedAnswers")
       ) {
         let todaysCompletedQuestions = await JSON.parse(
           localStorage.getItem("todaysCompletedQuestions")
@@ -88,6 +90,7 @@ function Questions() {
         console.log("Here's the questions array: ", todaysCompletedQuestions);
 
         setShowTodayCompleted(true);
+        setClickedAnswers(JSON.parse(localStorage.getItem("ClickedAnswers")));
 
         setScore(localStorage.getItem(date));
         setResults(JSON.parse(localStorage.getItem("results")));
@@ -179,14 +182,15 @@ function Questions() {
     const newResults = questions.map((question) =>
       question.result === true ? "Correct!" : "Incorrect!"
     );
-    console.log("Updated Questions: ", questions);
     setResults(newResults);
+    console.log("New results: ", results);
     setCompleted(true);
     getScore();
     setShowCorrectAnswers(true);
     localStorage.setItem("results", JSON.stringify(newResults));
     localStorage.setItem("ids", JSON.stringify(questionIds));
     localStorage.setItem("todaysCompletedQuestions", JSON.stringify(questions));
+    localStorage.setItem("ClickedAnswers", JSON.stringify(clickedAnswers));
 
     console.log("Here's the questions array: ", questionIds);
     setShowScore(true);
